@@ -28,8 +28,6 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(PlayerStats.GetStamina());
-
         if (Input.GetAxis("Horizontal") != 0)
         {
             Move();
@@ -89,9 +87,9 @@ public class PlayerMove : MonoBehaviour
         _isJumping = true;
     }
 
-    private void OnDrawGizmos()
-    {
-            Gizmos.color = Color.blue;
-            Gizmos.DrawWireCube(new Vector2(transform.position.x, transform.position.y - 2f), new Vector3(1f, 0.5f, 0f));
-    }
+    //private void OnDrawGizmos()
+    //{
+    //        Gizmos.color = Color.blue;
+    //        Gizmos.DrawWireCube(new Vector2(transform.position.x, transform.position.y - 2f), new Vector3(1f, 0.5f, 0f));
+    //}
 }
