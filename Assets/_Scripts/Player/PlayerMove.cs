@@ -28,6 +28,8 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(Physics2D.BoxCast(new Vector2(transform.position.x, transform.position.y - 2f), new Vector2(1f, 0.5f), 180f, Vector2.down).collider.transform.tag);
+
         if (Input.GetAxis("Horizontal") != 0)
         {
             Move();
@@ -39,17 +41,17 @@ public class PlayerMove : MonoBehaviour
         }
 
 
-        if (_isJumping && _cooldownTime > 0)
+        if (_isJumping)
         {
-            if (_cooldownTime > 0)
-            {
-                _cooldownTime -= Time.deltaTime;
-            }
-
             if (Physics2D.BoxCast(new Vector2(transform.position.x, transform.position.y - 2f), new Vector2(1f, 0.5f), 180f, Vector2.down).collider.transform.tag == "Ground" && _cooldownTime <= 0)
             {
                 _isJumping = false;
             }
+        }
+        
+        if (_cooldownTime > 0)
+        {
+            _cooldownTime -= Time.deltaTime;
         }
     }
 
