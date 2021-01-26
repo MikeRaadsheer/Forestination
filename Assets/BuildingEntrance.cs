@@ -17,8 +17,6 @@ public class BuildingEntrance : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Debug.Log("Please Enter");
-
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (isOutside)

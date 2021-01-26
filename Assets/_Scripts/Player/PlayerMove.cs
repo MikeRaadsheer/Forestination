@@ -1,11 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using Unity.Mathematics;
 using UnityEngine;
+
+public enum MoveMode { IDLE, SNEAKING, WALKING, RUNNING }
 
 public class PlayerMove : MonoBehaviour
 {
-
     private Rigidbody2D _rb;
     
     private float _sneakSpeed = 2f;
@@ -20,7 +23,10 @@ public class PlayerMove : MonoBehaviour
     private float _cooldownTime;
     private bool _isJumping = false;
 
+    private MoveMode _moveMode = MoveMode.IDLE;
 
+    public Action<MoveMode> PlayerMoveMode;
+    public Action PlayerJumped;
 
     void Start()
     {
@@ -29,11 +35,17 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(Physics2D.BoxCast(new Vector2(transform.position.x, transform.position.y - 2f), new Vector2(1f, 0.5f), 180f, Vector2.down).collider.transform.tag);
+        Debug.Log(PlayerNoise.Noise);
+
 
         if (Input.GetAxis("Horizontal") != 0)
         {
             Move();
+        }
+        else
+        {
+            _moveMode = MoveMode.IDLE;
+            PlayerMoveMode?.Invoke(_moveMode);
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && !_isJumping)
@@ -61,15 +73,18 @@ public class PlayerMove : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftControl))
         {
             transform.position += Input.GetAxis("Horizontal") * (transform.right * _sneakSpeed * Time.deltaTime);
+            _moveMode = MoveMode.SNEAKING;
         }
         else if (Input.GetKey(KeyCode.LeftShift) && !isTired)
         {
             transform.position += Input.GetAxis("Horizontal") * (transform.right * _sprintSpeed * Time.deltaTime);
             PlayerStats.DrainStamina(_staminaDrainRate * Time.deltaTime);
+            _moveMode = MoveMode.RUNNING;
         }
         else
         {
             transform.position += Input.GetAxis("Horizontal") * (transform.right * _moveSpeed * Time.deltaTime);
+            _moveMode = MoveMode.WALKING;
         }
 
         if (isTired || !Input.GetKey(KeyCode.LeftShift))
@@ -85,6 +100,8 @@ public class PlayerMove : MonoBehaviour
         {
             isTired = false;
         }
+
+        PlayerMoveMode?.Invoke(_moveMode);
     }
 
     private void Jump()
@@ -92,11 +109,13 @@ public class PlayerMove : MonoBehaviour
         _rb.AddForce(new Vector2(0f, _jumpHeight));
         _cooldownTime = _jumpCooldown;
         _isJumping = true;
+
+        PlayerJumped?.Invoke();
     }
 
-    //private void OnDrawGizmos()
-    //{
-    //        Gizmos.color = Color.blue;
-    //        Gizmos.DrawWireCube(new Vector2(transform.position.x, transform.position.y - 2f), new Vector3(1f, 0.5f, 0f));
-    //}
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawSphere(transform.position, PlayerNoise.Noise);
+    }
 }
