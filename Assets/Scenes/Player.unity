@@ -535,7 +535,7 @@ PlatformEffector2D:
   m_RotationalOffset: 0
   m_UseOneWay: 1
   m_UseOneWayGrouping: 0
-  m_SurfaceArc: 180
+  m_SurfaceArc: 1
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
@@ -710,8 +710,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1640783055}
-  _boundaries: {x: 4, y: 2}
-  _followSpeed: 1
 --- !u!1 &1531929002
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,10 +8,11 @@ public class PlayerMove : MonoBehaviour
 
     private Rigidbody2D _rb;
     
+    private float _sneakSpeed = 2f;
     private float _moveSpeed = 5f;
     private float _sprintSpeed = 8f;
-    private float staminaDrainRate = 7.5f;
-    private float staminaRestoreRate = 15f;
+    private float _staminaDrainRate = 7.5f;
+    private float _staminaRestoreRate = 15f;
     private bool isTired = false;
 
     private float _jumpHeight = 300f;
@@ -57,10 +58,14 @@ public class PlayerMove : MonoBehaviour
 
     private void Move()
     {
-        if (Input.GetKey(KeyCode.LeftShift) && !isTired)
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            transform.position += Input.GetAxis("Horizontal") * (transform.right * _sneakSpeed * Time.deltaTime);
+        }
+        else if (Input.GetKey(KeyCode.LeftShift) && !isTired)
         {
             transform.position += Input.GetAxis("Horizontal") * (transform.right * _sprintSpeed * Time.deltaTime);
-            PlayerStats.DrainStamina(staminaDrainRate * Time.deltaTime);
+            PlayerStats.DrainStamina(_staminaDrainRate * Time.deltaTime);
         }
         else
         {
@@ -69,7 +74,7 @@ public class PlayerMove : MonoBehaviour
 
         if (isTired || !Input.GetKey(KeyCode.LeftShift))
         {
-            PlayerStats.RestoreStamina(staminaRestoreRate * Time.deltaTime);
+            PlayerStats.RestoreStamina(_staminaRestoreRate * Time.deltaTime);
         }
 
         if(PlayerStats.GetStamina() < 2.5f && !isTired)

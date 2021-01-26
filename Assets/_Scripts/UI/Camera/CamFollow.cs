@@ -9,15 +9,23 @@ public class CamFollow : MonoBehaviour
 {
 
     public Transform target;
-    [SerializeField]
-    private Vector2 _boundaries;
-    [SerializeField]
-    private float _followSpeed;
+    private Vector2 _boundaries = new Vector2(4f, 2f);
 
-    private Vector3 lastPos;
-    private float idleTime = 0f;
-    private float timeToCenter = 5f;
-    private bool isCentering = false;
+    private Vector3 _lastPos;
+    private float _idleTime = 0f;
+    private float _timeToCenter = 5f;
+    private bool _isCentering = false;
+
+    private void Start()
+    {
+        float targetX = target.transform.position.x;
+        float targetY = target.transform.position.y;
+        float z = transform.position.z;
+
+        Vector3 targetPos = new Vector3(targetX, targetY, z);
+
+        transform.position = targetPos;
+    }
 
     void Update()
     {
@@ -42,41 +50,41 @@ public class CamFollow : MonoBehaviour
             }
             else if(differenceX > 10)
             {
-                Follow(pos, targetPos, 0);
+                Follow(pos, targetPos, 1);
             }
             else
             {
-                Follow(pos, targetPos, 100);
+                Follow(pos, targetPos, 0.01f);
             }
         }
 
-        if (pos == lastPos)
+        if (pos == _lastPos)
         {
-            idleTime += Time.deltaTime;
-            if (idleTime >= timeToCenter)
+            _idleTime += Time.deltaTime;
+            if (_idleTime >= _timeToCenter)
             {
-                isCentering = true;
+                _isCentering = true;
             }
         }
         else
         {
-            lastPos = pos;
-            idleTime = 0;
+            _lastPos = pos;
+            _idleTime = 0;
         }
         
-        if(isCentering && !Input.anyKey)
+        if(_isCentering && !Input.anyKey)
         {
-            Follow(pos, targetPos, 500);
+            Follow(pos, targetPos, 0.0025f);
         }
         else
         {
-            isCentering = false;
+            _isCentering = false;
         }
 
     }
 
-    private void Follow(Vector3 _pos, Vector3 _targetPos, int drag)
+    private void Follow(Vector3 _pos, Vector3 _targetPos, float _speed)
     {
-        transform.position = Vector3.Lerp(_pos, _targetPos, _followSpeed / drag);
+        transform.position = Vector3.Lerp(_pos, _targetPos, _speed);
     }
 }
