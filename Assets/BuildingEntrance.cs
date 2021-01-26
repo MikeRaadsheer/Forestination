@@ -5,30 +5,48 @@ using UnityEngine;
 public class BuildingEntrance : MonoBehaviour
 {
 
-    public GameObject outside;
     public GameObject inside;
+    public GameObject outside;
+    public GameObject front;
     private bool isOutside = true;
+    public BoxCollider2D[] insideWalls;
 
     private void Start()
     {
-        outside.SetActive(true);
-        inside.SetActive(false);
+        for (int i = 0; i < insideWalls.Length; i++)
+        {
+            insideWalls[i].enabled = false;
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        Debug.Log("Please Enter");
+
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (isOutside)
             {
                 outside.SetActive(false);
-                inside.SetActive(true);
+                front.SetActive(false);
+
+                for (int i = 0; i < insideWalls.Length; i++)
+                {
+                    insideWalls[i].enabled = true;
+                }
+
                 isOutside = false;
             }
             else
             {
                 outside.SetActive(true);
-                inside.SetActive(false);
+                front.SetActive(true);
+
+                for (int i = 0; i < insideWalls.Length; i++)
+                {
+                    insideWalls[i].enabled = false;
+                }
+
                 isOutside = true;
             }
         }
