@@ -10,6 +10,7 @@ public class PlayerStats : MonoBehaviour
     private static float Stamina;
     public static float Noise = 0f;
     public static Action GameOver;
+    public static bool isInsideTrailer = false;
 
     public static float ElapsedTime;
 
@@ -89,10 +90,20 @@ public class PlayerStats : MonoBehaviour
         return Stamina;
     }
 
+    public static bool GetIsInsideTrailer()
+    {
+        return isInsideTrailer;
+    }
+
+    public static void SetIsInsideTrailer(bool value)
+    {
+        isInsideTrailer = value;
+    }
+
     public static void EndGame()
     {
         Debug.Log("Game Over");
-        GameOver();
+        GameOver?.Invoke();
     }
 
 }

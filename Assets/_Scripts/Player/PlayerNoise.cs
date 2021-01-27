@@ -28,13 +28,13 @@ public class PlayerNoise : MonoBehaviour
                 _MovementNoise = 0;
                 break;
             case MoveMode.SNEAKING:
-                _MovementNoise = 2;
+                _MovementNoise = 1;
                 break;
             case MoveMode.WALKING:
-                _MovementNoise = 5;
+                _MovementNoise = 3;
                 break;
             case MoveMode.RUNNING:
-                _MovementNoise = 10;
+                _MovementNoise = 5;
                 break;
             default:
                 break;
@@ -50,7 +50,7 @@ public class PlayerNoise : MonoBehaviour
 
     private IEnumerator JumpNoise()
     {
-        _JumpNoise = 5;
+        _JumpNoise = 3;
         Noise = _MovementNoise + _JumpNoise;
 
         yield return new WaitForSeconds(0.5f);

@@ -1,0 +1,1 @@
+﻿public enum AmountOfPoision { NONE, LITTLE, NORMAL, LARGE, OVERKILL }
