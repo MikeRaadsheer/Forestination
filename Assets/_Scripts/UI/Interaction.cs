@@ -13,9 +13,15 @@ public class Interaction : MonoBehaviour
     [SerializeField]
     private float _range;
     private bool _canInteract = false;
+    protected bool _isLocked = false;
 
     void Update()
-    {   
+    {
+        if (_isLocked)
+        {
+            return;
+        }
+
         if(Input.GetKeyDown(interactionKey) && _canInteract)
         {
             Run();

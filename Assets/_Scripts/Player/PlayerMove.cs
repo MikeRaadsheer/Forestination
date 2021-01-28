@@ -35,6 +35,7 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(PlayerStats.Noise);
         if (Input.GetAxis("Horizontal") != 0)
         {
             Move();
@@ -113,6 +114,6 @@ public class PlayerMove : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, PlayerNoise.Noise);
+        Gizmos.DrawWireSphere(transform.position, PlayerStats.Noise);
     }
 }

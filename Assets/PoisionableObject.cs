@@ -7,10 +7,11 @@ public class PoisionableObject : Interaction
 {
     public GameObject UI;
     private bool _isPoisoning = false;
+    public bool isPoisoned = false;
     public PoisonObject poison;
 
     [SerializeField]
-    private AmountOfPoision _amountOfPoison = AmountOfPoision.NONE;
+    public AmountOfPoision amountOfPoison = AmountOfPoision.NONE;
 
     private void Start()
     {
@@ -22,19 +23,34 @@ public class PoisionableObject : Interaction
 
     public override void Run()
     {
+        if (isPoisoned)
+        {
+            Debug.Log("Object " + transform.name + " is already poisoned!");
+            return;
+        }
         _isPoisoning = true;
         UI.SetActive(true);
     }
 
     public void SetAmountOfPoision(AmountOfPoision _poison)
     {
-        if (!_isPoisoning)
+        if (!_isPoisoning || _poison == AmountOfPoision.NONE)
+        {
+            _isPoisoning = false;
+            UI.SetActive(false);
+            return;
+        }
+
+        if (!PlayerStats.UsePoison(_poison))
         {
             return;
         }
 
+        icon.SetActive(false);
+        _isLocked = true;
         _isPoisoning = false;
-        _amountOfPoison = _poison;
+        amountOfPoison = _poison;
+        isPoisoned = true;
         UI.SetActive(false);
     }
 }

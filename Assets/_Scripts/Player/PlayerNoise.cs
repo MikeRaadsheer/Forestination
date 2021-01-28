@@ -7,8 +7,6 @@ public class PlayerNoise : MonoBehaviour
 
     private PlayerMove _movement;
 
-    public static int Noise = 0;
-
     private static int _MovementNoise = 0;
     private static int _JumpNoise = 0;
 
@@ -40,7 +38,7 @@ public class PlayerNoise : MonoBehaviour
                 break;
         }
 
-        Noise = _MovementNoise + _JumpNoise;
+        PlayerStats.Noise = _MovementNoise + _JumpNoise;
     }
 
     void SetJumpNoise()
@@ -51,11 +49,11 @@ public class PlayerNoise : MonoBehaviour
     private IEnumerator JumpNoise()
     {
         _JumpNoise = 3;
-        Noise = _MovementNoise + _JumpNoise;
+        PlayerStats.Noise = _MovementNoise + _JumpNoise;
 
         yield return new WaitForSeconds(0.5f);
         _JumpNoise = 0;
-        Noise = _MovementNoise + _JumpNoise;
+        PlayerStats.Noise = _MovementNoise + _JumpNoise;
     }
 
 }

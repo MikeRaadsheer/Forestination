@@ -8,18 +8,21 @@ public enum EnemyState { SLEEP, WAKE, WALK, WORK, IDLE, DEAD }
 public class Enemy : MonoBehaviour
 {
     public GameObject sleepBalloon;
-    private EnemyState _state = EnemyState.SLEEP;
-    private Animator _anim;
+    public PoisionableObject poisonableObj;
+    public AmountOfPoision requiredPoison = AmountOfPoision.NORMAL;
+    public EnemyState _state = EnemyState.SLEEP;
+    public Animator _anim;
 
-    public int wakeUpNoiseLevel = 2;
-    public float wakeUpNoiseTime = 1.5f;
+    public int wakeUpNoiseLevel;
+    public int instantWakeUpNoiseLevel;
+    public float wakeUpNoiseTime;
     public float playerDectectionRange;
 
-    private float _distance;
-    private float _noiseTime = 0;
-    private Transform _target;
-    private Vector2 _pos;
-    private Vector2 _targetPos;
+    protected float _distance;
+    protected float _noiseTime = 0;
+    protected Transform _target;
+    protected Vector2 _pos;
+    protected Vector2 _targetPos;
 
 
     private void Start()
@@ -29,44 +32,9 @@ public class Enemy : MonoBehaviour
         _target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
-    private void Update()
-    {
-        _targetPos = new Vector2(_target.position.x, _target.position.y);
-        _distance = Vector2.Distance(_pos, _targetPos);
 
-        if (PlayerNoise.Noise > wakeUpNoiseLevel && _state == EnemyState.SLEEP && _distance <= playerDectectionRange)
-        {
-            _noiseTime += Time.deltaTime;
-        }
-        else if (_noiseTime != 0)
-        {
-            _noiseTime = 0;
-        }
 
-        if (_noiseTime >= wakeUpNoiseTime && _state != EnemyState.WAKE)
-        {
-            WakeUp();
-        }
-
-        switch (_state)
-        {
-            case EnemyState.WAKE:
-                CheckForPlayer();
-                break;
-            //case EnemyState.WALK:
-            //case EnemyState.WALK:
-            //    break;
-            //case EnemyState.WORK:
-            //    break;
-            //case EnemyState.IDLE:
-            //    break;
-            //case EnemyState.DEAD:
-            //    break;
-        }
-
-    }
-
-    private void CheckForPlayer()
+    protected void CheckForPlayer()
     {
         if(_distance <= playerDectectionRange && PlayerStats.GetIsInsideTrailer())
         {
@@ -74,11 +42,49 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void WakeUp()
+    public void WakeUp()
     {
         _state = EnemyState.WAKE;
         sleepBalloon.SetActive(false);
         _anim.SetTrigger("Wake");
+    }
+
+    public void ConsumeObj()
+    {
+        if (poisonableObj.isPoisoned)
+        {
+            int amount = 0;
+            switch (poisonableObj.amountOfPoison)
+            {
+                case AmountOfPoision.LITTLE:
+                    amount = 1;
+                    break;
+                case AmountOfPoision.NORMAL:
+                    amount = 2;
+                    break;
+                case AmountOfPoision.LARGE:
+                    amount = 3;
+                    break;
+                case AmountOfPoision.OVERKILL:
+                    amount = 4;
+                    break;
+            }
+
+            if (poisonableObj.amountOfPoison == requiredPoison || poisonableObj.amountOfPoison == requiredPoison + 1)
+            {
+                Die();
+            }else if(poisonableObj.amountOfPoison > requiredPoison + 1)
+            {
+                PlayerStats.EndGame();
+            }
+
+        }
+    }
+
+    private void Die()
+    {
+        _anim.SetBool("isDead", true);
+        _state = EnemyState.DEAD;
     }
 
     private void OnDrawGizmos()
