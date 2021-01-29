@@ -87,10 +87,10 @@ public class Enemy : MonoBehaviour
         _state = EnemyState.DEAD;
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, playerDectectionRange);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.cyan;
+    //    Gizmos.DrawWireSphere(transform.position, playerDectectionRange);
+    //}
 
 }

@@ -9,6 +9,7 @@ public class PoisionableObject : Interaction
     private bool _isPoisoning = false;
     public bool isPoisoned = false;
     public PoisonObject poison;
+    public GameObject particle;
 
     [SerializeField]
     public AmountOfPoision amountOfPoison = AmountOfPoision.NONE;
@@ -18,6 +19,7 @@ public class PoisionableObject : Interaction
         poison = FindObjectOfType<PoisonObject>();
         poison.PoisonedAmount += SetAmountOfPoision;
         UI.SetActive(false);
+        particle.SetActive(false);
     }
 
 
@@ -46,6 +48,7 @@ public class PoisionableObject : Interaction
             return;
         }
 
+        particle.SetActive(true);
         icon.SetActive(false);
         _isLocked = true;
         _isPoisoning = false;
