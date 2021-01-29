@@ -14,24 +14,24 @@ public class PlayerNoise : MonoBehaviour
     {
         _movement = GetComponent<PlayerMove>();
 
-        _movement.PlayerMoveMode += SetMoveNoise;
+        _movement.MoveMode += SetMoveNoise;
         _movement.PlayerJumped += SetJumpNoise;
     }
 
-    void SetMoveNoise(MoveMode _mode)
+    void SetMoveNoise(PlayerMoveMode _mode)
     {
         switch (_mode)
         {
-            case MoveMode.IDLE:
+            case PlayerMoveMode.IDLE:
                 _MovementNoise = 0;
                 break;
-            case MoveMode.SNEAKING:
+            case PlayerMoveMode.SNEAKING:
                 _MovementNoise = 1;
                 break;
-            case MoveMode.WALKING:
+            case PlayerMoveMode.WALKING:
                 _MovementNoise = 3;
                 break;
-            case MoveMode.RUNNING:
+            case PlayerMoveMode.RUNNING:
                 _MovementNoise = 5;
                 break;
             default:
@@ -49,11 +49,11 @@ public class PlayerNoise : MonoBehaviour
     private IEnumerator JumpNoise()
     {
         _JumpNoise = 3;
-        PlayerStats.Noise = _MovementNoise + _JumpNoise;
+        PlayerStats.SetNoise(_MovementNoise + _JumpNoise);
 
         yield return new WaitForSeconds(0.5f);
         _JumpNoise = 0;
-        PlayerStats.Noise = _MovementNoise + _JumpNoise;
+        PlayerStats.SetNoise(_MovementNoise + _JumpNoise);
     }
 
 }

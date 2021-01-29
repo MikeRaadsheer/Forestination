@@ -5,8 +5,6 @@ using System.Runtime.InteropServices;
 using Unity.Mathematics;
 using UnityEngine;
 
-public enum MoveMode { IDLE, SNEAKING, WALKING, RUNNING }
-
 public class PlayerMove : MonoBehaviour
 {
     private Rigidbody2D _rb;
@@ -23,9 +21,9 @@ public class PlayerMove : MonoBehaviour
     private float _cooldownTime;
     private bool _isJumping = false;
 
-    private MoveMode _moveMode = MoveMode.IDLE;
+    private PlayerMoveMode _moveMode = PlayerMoveMode.IDLE;
 
-    public Action<MoveMode> PlayerMoveMode;
+    public Action<PlayerMoveMode> MoveMode;
     public Action PlayerJumped;
 
     void Start()
@@ -35,15 +33,14 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(PlayerStats.Noise);
         if (Input.GetAxis("Horizontal") != 0)
         {
             Move();
         }
         else
         {
-            _moveMode = MoveMode.IDLE;
-            PlayerMoveMode?.Invoke(_moveMode);
+            _moveMode = PlayerMoveMode.IDLE;
+            MoveMode?.Invoke(_moveMode);
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && !_isJumping)
@@ -54,7 +51,7 @@ public class PlayerMove : MonoBehaviour
 
         if (_isJumping)
         {
-            if (Physics2D.BoxCast(new Vector2(transform.position.x, transform.position.y - 2f), new Vector2(1f, 0.5f), 180f, Vector2.down).collider.transform.tag == "Ground" && _cooldownTime <= 0)
+            if (Physics2D.BoxCast(new Vector2(transform.position.x, transform.position.y - 1f), new Vector2(1f, 0.5f), 180f, Vector2.down).collider.transform.tag == "Ground" && _cooldownTime <= 0)
             {
                 _isJumping = false;
             }
@@ -68,24 +65,24 @@ public class PlayerMove : MonoBehaviour
 
     private void Move()
     {
-        if (Input.GetKey(KeyCode.LeftControl))
+        if (Input.GetKey(KeyCode.S))
         {
             transform.position += Input.GetAxis("Horizontal") * (transform.right * _sneakSpeed * Time.deltaTime);
-            _moveMode = MoveMode.SNEAKING;
+            _moveMode = PlayerMoveMode.SNEAKING;
         }
-        else if (Input.GetKey(KeyCode.LeftShift) && !isTired)
+        else if (Input.GetKey(KeyCode.R) && !isTired)
         {
             transform.position += Input.GetAxis("Horizontal") * (transform.right * _sprintSpeed * Time.deltaTime);
             PlayerStats.DrainStamina(_staminaDrainRate * Time.deltaTime);
-            _moveMode = MoveMode.RUNNING;
+            _moveMode = PlayerMoveMode.RUNNING;
         }
         else
         {
             transform.position += Input.GetAxis("Horizontal") * (transform.right * _moveSpeed * Time.deltaTime);
-            _moveMode = MoveMode.WALKING;
+            _moveMode = PlayerMoveMode.WALKING;
         }
 
-        if (isTired || !Input.GetKey(KeyCode.LeftShift))
+        if (isTired || !Input.GetKey(KeyCode.R))
         {
             PlayerStats.RestoreStamina(_staminaRestoreRate * Time.deltaTime);
         }
@@ -99,7 +96,7 @@ public class PlayerMove : MonoBehaviour
             isTired = false;
         }
 
-        PlayerMoveMode?.Invoke(_moveMode);
+        MoveMode?.Invoke(_moveMode);
     }
 
     private void Jump()

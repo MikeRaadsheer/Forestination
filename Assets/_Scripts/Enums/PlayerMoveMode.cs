@@ -1,0 +1,1 @@
+﻿public enum PlayerMoveMode { IDLE, SNEAKING, WALKING, RUNNING }

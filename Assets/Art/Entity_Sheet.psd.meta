@@ -37,7 +37,7 @@ TextureImporter:
     second: Entity_Sheet_8
   - first:
       213: 5062522793050336670
-    second: Entity_Sheet_9
+    second: TextBalloon
   - first:
       213: -5780633864425282873
     second: Entity_Sheet_10
@@ -61,34 +61,34 @@ TextureImporter:
     second: Entity_Sheet_8
   - first:
       213: 3562262921574181890
-    second: Entity_Sheet_9
+    second: TextBalloon
   - first:
       213: -5254546591228671089
     second: Entity_Sheet_10
   - first:
       213: -5391294687715141914
-    second: Entity_Sheet_11
+    second: ZzZ 1
   - first:
       213: 7157233081894349174
     second: Entity_Sheet_12
   - first:
       213: 1801039278216867348
-    second: Entity_Sheet_13
+    second: ZzZ 2
   - first:
       213: -1757090622527017570
-    second: Entity_Sheet_14
+    second: PlayerWalk 1
   - first:
       213: 4662961639660779241
-    second: Entity_Sheet_15
+    second: PlayerIdle 1
   - first:
       213: 2347982394566096652
-    second: Entity_Sheet_16
+    second: PlayerIdle 2
   - first:
       213: -6013507477536753285
-    second: Entity_Sheet_17
+    second: PlayerIdle 3
   - first:
       213: 5729083500063246137
-    second: Entity_Sheet_18
+    second: PlayerIdle 4
   - first:
       213: -8848800851556483576
     second: Particle1
@@ -101,6 +101,15 @@ TextureImporter:
   - first:
       213: 5014372507002045360
     second: Particle4
+  - first:
+      213: 1436329935718546168
+    second: PlayerWalk 2
+  - first:
+      213: -4710752954336478957
+    second: PlayerWalk 3
+  - first:
+      213: -1162932273391551870
+    second: PlayerWalk 4
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -441,7 +450,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Entity_Sheet_15
+      name: PlayerIdle 1
       rect:
         serializedVersion: 2
         x: 0
@@ -462,7 +471,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Entity_Sheet_16
+      name: PlayerIdle 2
       rect:
         serializedVersion: 2
         x: 16
@@ -483,7 +492,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Entity_Sheet_17
+      name: PlayerIdle 3
       rect:
         serializedVersion: 2
         x: 32
@@ -504,7 +513,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Entity_Sheet_18
+      name: PlayerIdle 4
       rect:
         serializedVersion: 2
         x: 48
@@ -609,7 +618,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Entity_Sheet_9
+      name: TextBalloon
       rect:
         serializedVersion: 2
         x: 0
@@ -630,7 +639,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Entity_Sheet_11
+      name: ZzZ 1
       rect:
         serializedVersion: 2
         x: 16
@@ -651,7 +660,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Entity_Sheet_13
+      name: ZzZ 2
       rect:
         serializedVersion: 2
         x: 32
@@ -667,6 +676,90 @@ TextureImporter:
       bones: []
       spriteID: 41e64a46ea39ef810800000000000000
       internalID: 1801039278216867348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerWalk 1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9d6b16636f8d97e0800000000000000
+      internalID: -1757090622527017570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerWalk 2
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8fa73ce677edee310800000000000000
+      internalID: 1436329935718546168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerWalk 3
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 319f62c852b00aeb0800000000000000
+      internalID: -4710752954336478957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerWalk 4
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28ab8a2424f6cdfe0800000000000000
+      internalID: -1162932273391551870
       vertices: []
       indices: 
       edges: []

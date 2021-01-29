@@ -8,8 +8,11 @@ public class PlayerStats : MonoBehaviour
     private static int HP;
     private static float MaxStamina = 25;
     private static float Stamina;
-    public static float Noise = 0f;
+    public static int Noise = 0;
     public static Action GameOver;
+    public static Action<int> NoiseDel;
+    public static Action<int> PoisonDel;
+    public static Action<float> StaminaDel;
     public static bool isInsideTrailer = false;
     public static int UsabeAmountOfPoison = 12;
 
@@ -54,6 +57,7 @@ public class PlayerStats : MonoBehaviour
         {
             Stamina = 0;
         }
+        StaminaDel?.Invoke(Stamina);
     }
 
     public static void RestoreStamina(float amount)
@@ -63,17 +67,14 @@ public class PlayerStats : MonoBehaviour
         if (Stamina > MaxStamina)
         {
             Stamina = MaxStamina;
+            StaminaDel?.Invoke(Stamina);
         }
     }
 
-    public static void AddNoise(float amount)
+    public static void SetNoise(int amount)
     {
-        Noise += amount;
-    }
-
-    public static void RemoveNoise(float amount)
-    {
-        Noise -= amount;
+        Noise = amount;
+        NoiseDel?.Invoke(Noise);
     }
 
     public static bool UsePoison(AmountOfPoision _poison)
@@ -106,6 +107,7 @@ public class PlayerStats : MonoBehaviour
         }
 
         UsabeAmountOfPoison -= amount;
+        PoisonDel?.Invoke(UsabeAmountOfPoison);
         Debug.Log("Used " + amount + " poison, I have " + UsabeAmountOfPoison + " left.");
         return true;
     }
@@ -137,8 +139,7 @@ public class PlayerStats : MonoBehaviour
 
     public static void EndGame()
     {
-        Debug.Log("Game Over");
-        GameOver?.Invoke();
+        
     }
 
 }

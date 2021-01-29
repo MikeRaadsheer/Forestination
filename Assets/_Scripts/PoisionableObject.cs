@@ -16,7 +16,6 @@ public class PoisionableObject : Interaction
 
     private void Start()
     {
-        poison = FindObjectOfType<PoisonObject>();
         poison.PoisonedAmount += SetAmountOfPoision;
         UI.SetActive(false);
         particle.SetActive(false);

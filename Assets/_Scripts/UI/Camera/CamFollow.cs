@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using Unity.Mathematics;
-using UnityEditor.VersionControl;
+﻿using Unity.Mathematics;
 using UnityEngine;
 
 public class CamFollow : MonoBehaviour
@@ -54,7 +50,7 @@ public class CamFollow : MonoBehaviour
             }
             else
             {
-                Follow(pos, targetPos, 0.01f);
+                Follow(pos, targetPos, 0.02f);
             }
         }
 
